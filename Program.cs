@@ -6,12 +6,34 @@ namespace Matriz
     {
         static void Main(string[] args)
         {
-            // Creo una matriz con la libreria (clase)
-            // Matriz de 3 filas por 3 columnas.
-            Matriz m = new Matriz(3, 3);
+            bool v = true;
+            int op = 0;
+            while (v)
+            {
+                Console.WriteLine("--Menu--");
+                Console.WriteLine(" (1) Sistema de Ecuaciones Lineales");
+                Console.WriteLine(" (2) Sistema de Ecuaciones no Lineales");
+                Console.WriteLine(" (3) Salir del sistema");
+                try
+                {
+                    op = Convert.ToInt32(Console.ReadLine());
+                }
+                catch(Exception error)
+                {
+                    Console.WriteLine("ha ocurrido un erro "+error.Message);
+                }
+                if (op == 1)
+                {
 
-            // Imprimo la matriz con la funcion Print().
-            m.Print();
+                }else if (op == 2)
+                {
+
+                }
+                else if (op == 3) 
+                {
+                    v = false;
+                } 
+            }
         }
     }
 }
