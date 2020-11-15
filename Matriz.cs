@@ -168,23 +168,69 @@ namespace Matriz
 
             return T;
         }
+        
+        //Método que devuelve una matriz triangular superior
+        public static Matriz TriangularSuperior(Matriz A)
+        {
+            Matriz Resultado = new Matriz(A.rows, A.columns);
+                
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    if (j < i)
+                    {
+                        Resultado.Append(i,j,0);
+                    }
+                    else
+                    {
+                         Resultado.Append(i, j, A.Get(i, j));
+                    }
+                }
+            }
+            return Resultado;
+        }
+        
+        //Método que devuelve una matriz triangular inferior
+        public static Matriz TriangularInferior(Matriz A)
+        {
+           Matriz Resultado = new Matriz(A.rows, A.columns);
+
+           for (int i = 0; i < 4; i++)
+           {
+                for (int j = 0; j < 4; j++)
+                {
+                    if (j > i)
+                    {
+                        Resultado.Append(i, j, 0);
+                    }
+                    else
+                    {
+                        Resultado.Append(i, j, A.Get(i, j));
+                    }
+                }
+           }
+           return Resultado;
+        }
 
         // Funcion que devuelve la matriz dominante
-        public double[,] dominante()
+        public static Matriz dominante(Matriz A)
         {
+            Matriz Resultado = A;
+
             double dd = 0, suma, aux = 0, may = 0;
             int ind = 0;
             int k = 0;
 
             for (k = 0; k < 4; k++)
             {
-                may = Math.Abs(matriz[k,k]);
+                may = Math.Abs(Resultado.Get(k, k));
 
                 for (int l = k + 1; l < 4; l++)
                 {
-                    if (may < Math.Abs(matriz[k, l]))
+                    if (may < Math.Abs(Resultado.Get(k, l)))
                     {
-                        may = Math.Abs(matriz[k, l]);
+                        may = Math.Abs(Resultado.Get(k, l));
                         ind = l;
                     }
 
@@ -193,13 +239,13 @@ namespace Matriz
                 suma = 0;
                 for (int j = 0; j < 4; j++)
                 {
-                    if(k == j)
+                    if (k == j)
                     {
-                        dd = Math.Abs(matriz[j, k]);
+                        dd = Math.Abs(Resultado.Get(j, k));
                     }
                     else
                     {
-                        suma = suma + matriz[j, k];
+                        suma = suma + Resultado.Get(j, k);
                     }
                 }
 
@@ -207,15 +253,15 @@ namespace Matriz
                 {
                     for (int i = 0; i < 4; i++)
                     {
-                        aux = matriz[i, k];
-                        matriz[i, k] = matriz[i, ind];
-                        matriz[i, ind] = aux;
+                        aux = Resultado.Get(i, k);
+                        Resultado.Append(i, k, Resultado.Get(i, ind));
+                        Resultado.Append(i, ind,aux);
                     }
                 }
             }
 
-            return matriz;
-        }//Fin método dominante
+            return Resultado;
+        }
 
         // Funcion que devuelve una fila de la matriz
         // como un vector.
