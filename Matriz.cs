@@ -170,7 +170,7 @@ namespace Matriz
         }
         
         // Funcion que devuelve la matriz dominante
-        public Boolean dominante()
+        public double[,] dominante()
         {
             double dd = 0, suma, aux = 0, may = 0;
             int ind = 0;
@@ -215,7 +215,7 @@ namespace Matriz
                 }
             }
 
-            return band;
+            return matriz;
         }//Fin método dominante
     }
 }
