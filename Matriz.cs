@@ -45,15 +45,52 @@ namespace Matriz
         // Funcion para mostrar en consola todos
         // los valores de la matriz.
         public void Print() {
-            for(int j = 0; j < n; j++) {
-                for(int i = 0; i < m; i++) {
+            for(int i = 0; i < m; i++) {
+                for(int j = 0; j < n; j++) {
                     Console.Write(" {0}\t", matriz[i, j]);
                 }
                 Console.WriteLine();
             }
         }
-        
-        public void append(int i, int j, double num)
+
+        // Funcion que recibe como parametro un objeto
+        // de la clase Matriz y se suman los valores de
+        // ambas matrices.
+        public void Sumar(Matriz m2) {
+            if(m == m2.m && n == m2.n) {
+                for(int i = 0; i < m; i++) {
+                    for(int j = 0; j < n; j++) {
+                        matriz[i, j] += m2.matriz[i, j];
+                    }
+                }
+            } else {
+                Console.WriteLine("Error: Las matrices no son cuadradas, no se pueden sumar ):");
+            }
+        }
+
+        // Funcion que recibe como parametro dos objetos
+        // de la clase Matriz y se suman los valores de
+        // ambas matrices. Devulve un objeto de la clase
+        // Matriz como resultado.
+        public Matriz Sumar(Matriz m1, Matriz m2) {
+            if(m1.m == m2.m && m1.n == m2.n) {
+                Matriz m3 = new Matriz(m1.m, m1.n);
+                for(int i = 0; i < m; i++) {
+                    for(int j = 0; j < n; j++) {
+                        m3.matriz[i, j] = m1.matriz[i, j] + m2.matriz[i, j];
+                    }
+                }
+
+                return m3;
+            } else {
+                Console.WriteLine("Error: Las matrices no son cuadradas, no se pueden sumar ):");
+                return null;
+            }
+        }
+
+        // Funcion para asignar un valor a la matriz
+        // en la posicion [i, j]
+        public void Append(int i, int j, double num)
         {
             matriz[i,j] = num;
         }
