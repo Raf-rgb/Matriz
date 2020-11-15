@@ -168,5 +168,57 @@ namespace Matriz
 
             return T;
         }
+        
+        // Funcion que devuelve la matriz dominante
+        public Boolean dominante()
+        {
+            double may;
+            int ind = 0;
+            Boolean band = true;
+            double aux;
+            double acum;
+
+            for (int j = 0; j < n; j++)
+            {
+                may = Math.Abs(matriz[j, j]);
+                ind = j;
+
+                for (int i = j+1; i < m; i++)
+                {
+                    if(may < Math.Abs(matriz[i, j]))
+                    {
+                        may = Math.Abs(matriz[i, j]);
+                        ind = i;
+                    }
+                }
+
+                if(j != ind)
+                {
+                    for(int k = 0; k < 4; k++)
+                    {
+                        aux = matriz[j, k];
+                        matriz[j, k] = matriz[ind, k];
+                        matriz[ind, k] = aux;
+                    }
+                }
+
+                acum = 0;
+                for(int l=0; l < 4; l++)
+                {
+                    if (j != l)
+                    {
+                        acum = acum + Math.Abs(matriz[j, l]);
+                    }
+                }
+
+                if(acum > Math.Abs(matriz[j, j]))
+                {
+                    break;
+                }
+            }
+
+            return band;
+
+        }//Fin método dominante
     }
 }
