@@ -6,11 +6,11 @@ namespace Matriz
     {
         // Defino el arreglo bidimensional en dónde
         // se almacenarán los valores de la matriz.
-        public double[,] matriz;
+        private double[,] matriz;
 
         // Defino las variables (m y n) que almacenan
         // el numero de filas y columnas de la matriz.
-        public int m, n;
+        public int rows, columns;
 
         // Constructor que recibe como parametro
         // la cantidad de filas y columnas para
@@ -18,8 +18,8 @@ namespace Matriz
         public Matriz(int x)
         {
             matriz = new double[x, x];
-            n = x;
-            m = x;
+            rows = x;
+            columns = x;
         }
 
         // Constructor que recibe como parametro
@@ -27,8 +27,8 @@ namespace Matriz
         // matriz a crear.
         public Matriz(int m_, int n_) {
             matriz = new double[m_, n_];
-            m = m_;
-            n = n_;
+            rows = m_;
+            columns = n_;
         }
 
         // Constructor que recibe como parametro
@@ -37,17 +37,25 @@ namespace Matriz
         public Matriz(double[,] matriz_) {
             matriz = matriz_;
             // Se almacena el numero de filas de la matriz
-            m = matriz.GetLength(0);
+            rows = matriz.GetLength(0);
             // Se almacena el numero de columnas de la matriz
-            n = matriz.GetLength(1);
+            columns = matriz.GetLength(1);
         }
+
+        // Funcion para asignar un valor a la matriz
+        // en la posicion [i, j]
+        public void Append(int i, int j, double num) { matriz[i,j] = num; }
+
+        // Funcion que devuelve el valor de la matriz
+        // en la posicion [i, j]
+        public double Get(int i, int j) { return matriz[i,j]; }
 
         // Funcion para mostrar en consola todos
         // los valores de la matriz.
         public void Print() {
-            for(int i = 0; i < m; i++) {
-                for(int j = 0; j < n; j++) {
-                    Console.Write(" {0}\t", matriz[i, j]);
+            for(int i = 0; i < rows; i++) {
+                for(int j = 0; j < columns; j++) {
+                    Console.Write(" {0}\t", Get(i, j));
                 }
                 Console.WriteLine();
             }
@@ -56,11 +64,11 @@ namespace Matriz
         // Funcion que recibe como parametro un objeto
         // de la clase Matriz y se suman los valores de
         // ambas matrices.
-        public void Sumar(Matriz m2) {
-            if(m == m2.m && n == m2.n) {
-                for(int i = 0; i < m; i++) {
-                    for(int j = 0; j < n; j++) {
-                        matriz[i, j] += m2.matriz[i, j];
+        public void Add(Matriz B) {
+            if(rows == B.rows && columns == B.columns) {
+                for(int i = 0; i < rows; i++) {
+                    for(int j = 0; j < columns; j++) {
+                        matriz[i, j] += B.Get(i, j);
                     }
                 }
             } else {
@@ -68,31 +76,84 @@ namespace Matriz
             }
         }
 
-        // Funcion que recibe como parametro dos objetos
-        // de la clase Matriz y se suman los valores de
-        // ambas matrices. Devulve un objeto de la clase
-        // Matriz como resultado.
-        public Matriz Sumar(Matriz m1, Matriz m2) {
-            if(m1.m == m2.m && m1.n == m2.n) {
-                Matriz m3 = new Matriz(m1.m, m1.n);
-                for(int i = 0; i < m; i++) {
-                    for(int j = 0; j < n; j++) {
-                        m3.matriz[i, j] = m1.matriz[i, j] + m2.matriz[i, j];
+        // Funcion que recibe como parametros dos matrices
+        // A y B. Devuelve la suma de ambas.
+        public static Matriz Add(Matriz A, Matriz B) {
+            if(A.rows == B.rows && A.columns == B.columns) {
+                // Matriz que guardará el resultado de la suma
+                Matriz C = new Matriz(A.rows, B.columns);
+
+                for(int i = 0; i < A.rows; i++) {
+                    for(int j = 0; j < A.columns; j++) {
+                        C.matriz[i, j] = A.Get(i, j) + B.Get(i, j);
                     }
                 }
 
-                return m3;
+                return C;
             } else {
                 Console.WriteLine("Error: Las matrices no son cuadradas, no se pueden sumar ):");
                 return null;
             }
         }
 
-        // Funcion para asignar un valor a la matriz
-        // en la posicion [i, j]
-        public void Append(int i, int j, double num)
-        {
-            matriz[i,j] = num;
+
+        // Funcion que recibe como parametro un objeto
+        // de la clase Matriz y se restan los valores de
+        // ambas matrices.
+        public void Sub(Matriz B) {
+            if(rows == B.rows && columns == B.columns) {
+                for(int i = 0; i < rows; i++) {
+                    for(int j = 0; j < columns; j++) {
+                        matriz[i, j] -= B.Get(i, j);
+                    }
+                }
+            } else {
+                Console.WriteLine("Error: Las matrices no son cuadradas, no se pueden sumar ):");
+            }
+        }
+
+        // Funcion que recibe como parametros dos matrices
+        // A y B. Devuelve la suma de ambas.
+        public static Matriz Sub(Matriz A, Matriz B) {
+            if(A.rows == B.rows && A.columns == B.columns) {
+                // Matriz que guardará el resultado de la suma
+                Matriz C = new Matriz(A.rows, B.columns);
+
+                for(int i = 0; i < A.rows; i++) {
+                    for(int j = 0; j < A.columns; j++) {
+                        C.matriz[i, j] = A.Get(i, j) - B.Get(i, j);
+                    }
+                }
+
+                return C;
+            } else {
+                Console.WriteLine("Error: Las matrices no son cuadradas, no se pueden sumar ):");
+                return null;
+            }
+        }
+
+        // Funcion que recibe como parametros dos matrices
+        // A y B. Devuelve la multiplicación de ambas.
+        public static Matriz Mult(Matriz A, Matriz B) {
+            if(A.columns == B.rows) {
+                Matriz C = new Matriz(A.rows, B.columns);
+
+                for(int i = 0; i < A.rows; i++) {
+                    for(int  j = 0; j < A.columns; j++) {
+                        double suma = 0;
+                        for(int k = 0; k < A.columns; k++) {
+                            suma += A.Get(i, k) * B.Get(k, j);
+                        }
+
+                        C.Append(i, j, suma);
+                    }
+                }
+
+                return C;
+            } else {
+                Console.WriteLine("Error: no se pueden multiplicar");
+                return null;
+            }
         }
     }
 }
