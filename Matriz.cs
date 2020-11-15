@@ -168,7 +168,7 @@ namespace Matriz
 
             return T;
         }
-        
+
         // Funcion que devuelve la matriz dominante
         public double[,] dominante()
         {
@@ -216,5 +216,114 @@ namespace Matriz
 
             return matriz;
         }//Fin método dominante
+
+        // Funcion que devuelve una fila de la matriz
+        // como un vector.
+        public Vector Get(int i) {
+            Vector v = new Vector(matriz.GetLength(1));
+
+            for(int j = 0; j < v.len; j++) {
+                v.vector[j] = matriz[i, j];
+            }
+
+            return v;
+        }
+
+        public void Insert(Vector v, int i) {
+            if(v.len == columns) {
+                for(int j = 0; j < v.len; j++) {
+                    matriz[i, j] = v.vector[j];
+                }
+            } else {
+                Console.WriteLine($"Error: El numero de elementos del vector es diferente al numero de elementos de la fila {i} de la matriz ):");
+            }
+        }
+
+        // Metodo de eliminacion de Gauss-Jordan
+        public static Matriz GaussJordan(Matriz A) {
+            // Matriz resultante
+            Matriz B = A;
+
+            for(int i = 0; i < B.rows; i++) {
+                for(int j = 0; j < B.columns; j++) {
+                    // Se realizan las operaciones de acuerdo
+                    // a la diagonal de la matriz.
+                    if(i == j) {
+                        if(B.Get(i, j) != 1) {
+                            // Si el elemento en la diagonal es un 0
+                            // se intercambia el renglon por otro.
+                            if(B.Get(i, j) == 0) {
+                                for(int f = 0; f < B.rows; f++) {
+                                    if(B.Get(f, j) == 1 || B.Get(f, j) != 0) {
+
+                                        //Console.WriteLine("\nSe intercambian renglones");
+                                        //Console.Write($"\nR[{i}] -> R[{f}]");
+                                        //Console.WriteLine("\nResultado: \n");
+                                        Vector aux = B.Get(i);
+                                        B.Insert(B.Get(f), i);
+                                        B.Insert(aux, f);
+                                        //B.Print();
+                                        break;
+                                    }
+                                }
+                            }
+
+                            // Se obtiene la fila de la matriz
+                            Vector row = B.Get(i);
+
+                            //Console.Write($"\nR[{i}]/{B.Get(i, j)} = ");
+
+                            // Se divide el valor de la diagonal
+                            // entre si mismo para obtener un pivote.
+                            row.Div(B.Get(i, j));
+                            
+                            //row.Print();
+                            
+                            // Se insertan los nuevos valore de
+                            // la fila a la matriz.
+                            B.Insert(row, i);
+                        }
+
+                        // Se colocan ceros arriba y abajo de cada 
+                        //valor de la diagonal de la matriz
+                        for (int k = 1; k < B.rows; k++)
+                        {
+                            // Si el valor que está debajo o arriba
+                            // del valor de la diagonal es diferente
+                            // de cero, se realizan las operaciones
+                            // entre renglones para obtener un cero.
+                            if (B.Get((i + k) % B.rows, j) != 0)
+                            {
+                                // Vector que guardará el resultado
+                                // de la operacion entre reglones.
+                                Vector result;
+                                // Obtengo la fila de la matriz
+                                Vector row = B.Get(i);
+                                // Fila en donde se colocará un cero.
+                                Vector nextRow = B.Get((i + k) % B.rows);
+
+                                // Se realiza la operacion
+                                row.Mult(-1 * B.Get((i + k) % B.rows, j));
+                                result = Vector.Add(row, nextRow);
+                                
+                                //Console.Write($"\n-{B.Get((i + k) % B.rows, j)} * R[{i}] + R[{(i + k) % B.rows}] = ");
+                                //result.Print();
+
+                                // Se insertan los nuevos valores de la fila
+                                // de la matriz.
+                                B.Insert(result, (i + k) % B.rows);
+                                
+                                //Console.WriteLine("\n Resultado Matriz = \n");
+                                
+                                //B.Print();
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            return B;
+        }
     }
 }
