@@ -151,7 +151,7 @@ Para restar los valores de una matriz B a una matriz A:
     {1, 1, 1}
   });
   
-  // Se suman los valores de B a los valores de A
+  // Se restan los valores de B a los valores de A
   A.Sub(B);
   A.Print();
   
@@ -176,10 +176,10 @@ Para sumar dos matrices y obtener una matriz como resultado:
     {1, 1, 1}
   });
   
-  // Matriz que guardará el resultado de la suma
+  // Matriz que guardará el resultado de la resta
   Matriz C = new Matriz(3);
   
-  // Se suman las matrices A y B, y se guarda el resultado en
+  // Se restan las matrices A y B, y se guarda el resultado en
   // la matriz C.
   C = Matriz.Sub(A, B);
   C.Print();
@@ -207,10 +207,10 @@ Para multiplicar dos matrices y obtener una matriz como resultado:
     {0, 0, 1}
   });
   
-  // Matriz que guardará el resultado de la suma
+  // Matriz que guardará el resultado de la multiplicación
   Matriz C = new Matriz(3);
   
-  // Se suman las matrices A y B, y se guarda el resultado en
+  // Se multiplican las matrices A y B, y se guarda el resultado en
   // la matriz C.
   C = Matriz.Mult(A, B);
   C.Print();
