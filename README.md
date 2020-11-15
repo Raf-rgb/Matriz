@@ -68,12 +68,12 @@ Llenando una matriz
 ```c#
   Matriz matriz = new Matriz(3);
   
-  for(int i = 0; i < matriz.m; i++) {
-    for(int j = 0; j < matriz.n; j++) {
+  for(int i = 0; i < matriz.rows; i++) {
+    for(int j = 0; j < matriz.columns; j++) {
       Console.Write($"Ingrese el valor [{i}, {j}] = ");
       double valor = Convert.ToDouble(Console.ReadLine());
       
-      matriz.append(i, j, valor);
+      matriz.Append(i, j, valor);
     }
   }
 ```
@@ -96,7 +96,7 @@ Para sumar los valores de una matriz B a una matriz A:
   });
   
   // Se suman los valores de B a los valores de A
-  A.Sumar(B);
+  A.Add(B);
   A.Print();
   
   // Resultado:
@@ -125,11 +125,98 @@ Para sumar dos matrices y obtener una matriz como resultado:
   
   // Se suman las matrices A y B, y se guarda el resultado en
   // la matriz C.
-  C = Sumar(A, B);
+  C = Matriz.Add(A, B);
   C.Print();
   
   // Resultado:
   // 3  3  3
   // 3  3  3
   // 3  3  3
+```
+
+### Restando matrices
+
+Para restar los valores de una matriz B a una matriz A:
+
+```c#
+  Matriz A = new Matriz(new double[,]{
+    {2, 2, 2},
+    {2, 2, 2},
+    {2, 2, 2}
+  });
+  
+  Matriz B = new Matriz(new double[,]{
+    {1, 1, 1},
+    {1, 1, 1},
+    {1, 1, 1}
+  });
+  
+  // Se suman los valores de B a los valores de A
+  A.Sub(B);
+  A.Print();
+  
+  // Resultado:
+  // 1  1  1
+  // 1  1  1
+  // 1  1  1
+```
+
+Para sumar dos matrices y obtener una matriz como resultado:
+
+```c#
+  Matriz A = new Matriz(new double[,]{
+    {2, 2, 2},
+    {2, 2, 2},
+    {2, 2, 2}
+  });
+  
+  Matriz B = new Matriz(new double[,]{
+    {1, 1, 1},
+    {1, 1, 1},
+    {1, 1, 1}
+  });
+  
+  // Matriz que guardará el resultado de la suma
+  Matriz C = new Matriz(3);
+  
+  // Se suman las matrices A y B, y se guarda el resultado en
+  // la matriz C.
+  C = Matriz.Sub(A, B);
+  C.Print();
+  
+  // Resultado:
+  // 1  1  1
+  // 1  1  1
+  // 1  1  1
+```
+
+### Multiplicando matrices
+
+Para multiplicar dos matrices y obtener una matriz como resultado:
+
+```c#
+  Matriz A = new Matriz(new double[,]{
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+  });
+  
+  Matriz B = new Matriz(new double[,]{
+    {1, 0, 0},
+    {0, 1, 0},
+    {0, 0, 1}
+  });
+  
+  // Matriz que guardará el resultado de la suma
+  Matriz C = new Matriz(3);
+  
+  // Se suman las matrices A y B, y se guarda el resultado en
+  // la matriz C.
+  C = Matriz.Mult(A, B);
+  C.Print();
+  
+  // Resultado (multiplicar una matriz A por una matriz identidad B, es equivalente a multiplicar cada elemento de la matriz A por 1):
+  // 1  2  3
+  // 4  5  6
+  // 7  8  9
 ```
