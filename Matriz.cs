@@ -17,7 +17,7 @@ namespace Matriz
         // una matriz cuadrada.
         public Matriz(int x)
         {
-            matriz = new double[n, n];
+            matriz = new double[x, x];
             n = x;
             m = x;
         }
