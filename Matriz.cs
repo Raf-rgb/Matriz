@@ -172,53 +172,50 @@ namespace Matriz
         // Funcion que devuelve la matriz dominante
         public Boolean dominante()
         {
-            double may;
+            double dd = 0, suma, aux = 0, may = 0;
             int ind = 0;
             Boolean band = true;
-            double aux;
-            double acum;
+            int k = 0;
 
-            for (int j = 0; j < n; j++)
+            for (k = 0; k < 4; k++)
             {
-                may = Math.Abs(matriz[j, j]);
-                ind = j;
+                may = Math.Abs(matriz[k,k]);
 
-                for (int i = j+1; i < m; i++)
+                for (int l = k + 1; l < 4; l++)
                 {
-                    if(may < Math.Abs(matriz[i, j]))
+                    if (may < Math.Abs(matriz[k, l]))
                     {
-                        may = Math.Abs(matriz[i, j]);
-                        ind = i;
+                        may = Math.Abs(matriz[k, l]);
+                        ind = l;
+                    }
+
+                }
+
+                suma = 0;
+                for (int j = 0; j < 4; j++)
+                {
+                    if(k == j)
+                    {
+                        dd = Math.Abs(matriz[j, k]);
+                    }
+                    else
+                    {
+                        suma = suma + matriz[j, k];
                     }
                 }
 
-                if(j != ind)
+                if (dd < suma)
                 {
-                    for(int k = 0; k < 4; k++)
+                    for (int i = 0; i < 4; i++)
                     {
-                        aux = matriz[j, k];
-                        matriz[j, k] = matriz[ind, k];
-                        matriz[ind, k] = aux;
+                        aux = matriz[i, k];
+                        matriz[i, k] = matriz[i, ind];
+                        matriz[i, ind] = aux;
                     }
-                }
-
-                acum = 0;
-                for(int l=0; l < 4; l++)
-                {
-                    if (j != l)
-                    {
-                        acum = acum + Math.Abs(matriz[j, l]);
-                    }
-                }
-
-                if(acum > Math.Abs(matriz[j, j]))
-                {
-                    break;
                 }
             }
 
             return band;
-
         }//Fin método dominante
     }
 }
