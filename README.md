@@ -18,6 +18,8 @@ Matriz cuadrada
 
 ### Imprimiendo una matriz
 
+Mostrando todos los valores de la matriz
+
 ```c#
   // Creando una matriz cuadrada 3 filas x 3 columnas
   Matriz m = new Matriz(3);
@@ -29,6 +31,19 @@ Matriz cuadrada
   // 0  0  0
   // 0  0  0
   // 0  0  0
+```
+
+Mostrando un valor en la posicion (i, j)
+
+```c#
+  // Creando una matriz cuadrada 3 filas x 3 columnas
+  Matriz m = new Matriz(3);
+  
+  //Mostrando en consola el valor en la posicion (0, 0)
+  m.Get(0, 0);
+ 
+  // Resultado:
+  // 0
 ```
 
 ### Inicializando una matriz
@@ -68,13 +83,13 @@ Llenando una matriz
 Para sumar los valores de una matriz B a una matriz A:
 
 ```c#
-  Matriz A = new Matriz({
+  Matriz A = new Matriz(new double[,]{
     {1, 1, 1},
     {1, 1, 1},
     {1, 1, 1}
   });
   
-  Matriz B = new Matriz({
+  Matriz B = new Matriz(new double[,]{
     {2, 2, 2},
     {2, 2, 2},
     {2, 2, 2}
@@ -93,13 +108,13 @@ Para sumar los valores de una matriz B a una matriz A:
 Para sumar dos matrices y obtener una matriz como resultado:
 
 ```c#
-  Matriz A = new Matriz({
+  Matriz A = new Matriz(new double[,]{
     {1, 1, 1},
     {1, 1, 1},
     {1, 1, 1}
   });
   
-  Matriz B = new Matriz({
+  Matriz B = new Matriz(new double[,]{
     {2, 2, 2},
     {2, 2, 2},
     {2, 2, 2}
@@ -110,7 +125,7 @@ Para sumar dos matrices y obtener una matriz como resultado:
   
   // Se suman las matrices A y B, y se guarda el resultado en
   // la matriz C.
-  C.Sumar(A, B);
+  C = Sumar(A, B);
   C.Print();
   
   // Resultado:
