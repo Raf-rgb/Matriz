@@ -155,5 +155,18 @@ namespace Matriz
                 return null;
             }
         }
+
+        // Funcion que devuelve la transpuesta de una matriz
+        public Matriz Transpose() {
+            Matriz T = new Matriz(columns, rows);
+
+            for(int i = 0; i < T.rows; i++) {
+                for(int j = 0; j < T.columns; j++) {
+                    T.Append(i, j, Get(j, i));
+                }
+            }
+
+            return T;
+        }
     }
 }
