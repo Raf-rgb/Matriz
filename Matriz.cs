@@ -52,5 +52,10 @@ namespace Matriz
                 Console.WriteLine();
             }
         }
+        
+        public void append(int i, int j, double num)
+        {
+            matriz[i,j] = num;
+        }
     }
 }
