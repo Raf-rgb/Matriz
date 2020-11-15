@@ -174,7 +174,6 @@ namespace Matriz
         {
             double dd = 0, suma, aux = 0, may = 0;
             int ind = 0;
-            Boolean band = true;
             int k = 0;
 
             for (k = 0; k < 4; k++)
