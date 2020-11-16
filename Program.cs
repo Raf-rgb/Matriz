@@ -26,7 +26,7 @@ namespace Matriz
             string[] menu = new string[]{
                 "Sistema de Ecuaciones Lineales",
                 "Sistema de Ecuaciones no Lineales"
-            }
+            };
             bool v = true;
             int op = 0;
             while (v)
