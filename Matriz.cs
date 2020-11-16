@@ -168,7 +168,7 @@ namespace Matriz
 
             return T;
         }
-        
+
         //Método que devuelve una matriz triangular superior
         public static Matriz TriangularSuperior(Matriz A)
         {
@@ -275,6 +275,22 @@ namespace Matriz
             return v;
         }
 
+        // Funcion para obtener una copia del
+        // objeto Matriz.
+        public Matriz Copy() {
+            Matriz copy = new Matriz(rows, columns);
+
+            for(int i = 0; i < rows; i++) {
+                for(int j = 0; j < columns; j++) {
+                    copy.Append(i, j, matriz[i, j]);
+                }
+            }
+
+            return copy;
+        }
+
+        // Funcion para insertar un vector como
+        // a una fila (i) de la matriz.
         public void Insert(Vector v, int i) {
             if(v.len == columns) {
                 for(int j = 0; j < v.len; j++) {
@@ -288,7 +304,7 @@ namespace Matriz
         // Metodo de eliminacion de Gauss-Jordan
         public static Matriz GaussJordan(Matriz A) {
             // Matriz resultante
-            Matriz B = A;
+            Matriz B = A.Copy();
 
             for(int i = 0; i < B.rows; i++) {
                 for(int j = 0; j < B.columns; j++) {
@@ -299,7 +315,7 @@ namespace Matriz
                             // Si el elemento en la diagonal es un 0
                             // se intercambia el renglon por otro.
                             if(B.Get(i, j) == 0) {
-                                for(int f = 0; f < B.rows; f++) {
+                                for(int f = i; f < B.rows; f++) {
                                     if(B.Get(f, j) == 1 || B.Get(f, j) != 0) {
 
                                         //Console.WriteLine("\nSe intercambian renglones");
@@ -328,6 +344,7 @@ namespace Matriz
                             // Se insertan los nuevos valore de
                             // la fila a la matriz.
                             B.Insert(row, i);
+                            //B.Print();
                         }
 
                         // Se colocan ceros arriba y abajo de cada 
@@ -370,6 +387,131 @@ namespace Matriz
             }
 
             return B;
+        }
+
+        // Funcion para calcular la matriz triangular superior.
+        public static Matriz Triangular(Matriz A) {
+            // Matriz resultante
+            Matriz B = A.Copy();
+
+            for(int i = 0; i < B.rows; i++) {
+                for(int j = 0; j < B.columns-1; j++) {
+                    // Se realizan las operaciones de acuerdo
+                    // a la diagonal de la matriz.
+                    if(i == j && B.Get(i, j) != 0) {
+                        // Se colocan ceros abajo de cada valor de
+                        // la diagonal.
+                        for (int k = i+1; k < B.rows; k++)
+                        {
+                            // Vector que guardará el resultado
+                            // de la operacion entre reglones.
+                            Vector result;
+                            // Obtengo la fila de la matriz
+                            Vector row = B.Get(i);
+                            // Fila en donde se colocará un cero.
+                            Vector nextRow = B.Get(k);
+
+                            // Se realiza la operacion
+                            row.Mult(-1 * B.Get(k, j) / B.Get(i, j));
+                            result = Vector.Add(row, nextRow);
+
+                            //Console.Write($"\n{-1*B.Get(k, j)}/{B.Get(i, j)} * R[{i}] + R[{k}] = ");
+                            //result.Print();
+
+                            // Se insertan los nuevos valores de la fila
+                            // de la matriz.
+                            B.Insert(result, k);
+
+                            //Console.WriteLine("\n Resultado Matriz = \n");
+
+                            //B.Print();
+                        }
+
+                    }
+                }
+            }
+            // Se devuelve la matriz triangular
+            return B;
+        }
+
+        // Funcion para calcular el determinante de una matriz
+        // cuadrada. Recibe como parametro la matriz cuadrada
+        // y devuelve su determinante.
+        public static double Determinant(Matriz A) {
+            double det = 1;
+
+            if(A.rows == A.columns) {
+                Matriz B = Triangular(A);
+
+                for(int i = 0; i < B.rows; i++) { det *= B.Get(i, i); }
+
+                if(det == -0) det *= -1;
+                return det;
+            } else {
+                Console.WriteLine("Error: no se puede calcular el determinante, la matriz no es cuadrada ):");
+                return 0;
+            }
+        }
+
+        // Funcion para obtener una matriz identidad.
+        // Recibe como parametro el numero de filas y
+        // columnas de la matriz identidad deseada.
+        public static Matriz Identity(int n) {
+            Matriz I = new Matriz(n);
+            
+            for(int i = 0; i < I.rows; i++) I.Append(i, i, 1);
+
+            return I;
+        }
+
+        // Funcion para obtener una matriz identidad.
+        // Recibe como parametro el numero de filas y
+        // columnas de la matriz identidad deseada.
+        public static Matriz Combine(Matriz A, Matriz B) {
+            Matriz AB = new Matriz(A.rows, A.columns*2);
+            
+            for(int i = 0; i < AB.rows; i++) {
+                for(int j = 0; j < AB.columns; j++) {
+                    if(j >= AB.columns/2) {
+                        AB.Append(i, j, B.Get(i, j%A.columns));
+                    } else {
+                        AB.Append(i, j, A.Get(i, j));
+                    }
+                }
+            }
+
+            return AB;
+        }
+
+        public static Matriz Inverse(Matriz A) {
+            if(A.rows == A.columns){
+                if(Matriz.Determinant(A) != 0) {
+                    // Agrego a la matriz una matriz identidad
+                    Matriz B = Combine(A, Matriz.Identity(A.rows));
+                    // Creo la matriz que guardará la matriz inversa
+                    Matriz inverse = new Matriz(A.rows, A.columns);
+
+                    // Se realiza la eliminacion por Gauss-Jordan
+                    B = Matriz.GaussJordan(B);
+                    
+                    // Se extrae solo la matriz identidad que
+                    // fue agregada a la matriz. Esta tendrá
+                    // los valores de la matriz inversa.
+                    for(int i = 0; i < B.rows; i++) {
+                        for(int j = B.columns/2; j < B.columns; j++) {
+                            inverse.Append(i, j%A.columns, B.Get(i, j));
+                        }
+                    }
+                    return inverse;
+                    
+                } else {
+                    Console.WriteLine("Error: el determinante de la matriz es 0 ):");
+                    return null;
+                }
+            } else {
+                Console.WriteLine("Error: la matriz no es cuadrada ):");
+                return null;
+            }
         }
     }
 }
