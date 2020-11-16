@@ -178,13 +178,16 @@ namespace Matriz
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    if (j < i)
+                    if (j <= i)
                     {
                         Resultado.Append(i,j,0);
                     }
                     else
                     {
-                         Resultado.Append(i, j, A.Get(i, j));
+                        if(A.Get(i, j) == 0)
+                             Resultado.Append(i, j, 0);
+                        else
+                             Resultado.Append(i, j, -1 * A.Get(i, j));
                     }
                 }
             }
@@ -206,11 +209,36 @@ namespace Matriz
                     }
                     else
                     {
-                        Resultado.Append(i, j, A.Get(i, j));
+                        if(A.Get(i, j) == 0)
+                             Resultado.Append(i, j, 0);
+                        else
+                             Resultado.Append(i, j, -1 * A.Get(i, j));
                     }
                 }
            }
            return Resultado;
+        }
+        
+        //Método que obtiene la matriz diagonal
+        public static Matriz Diagonal(Matriz A)
+        {
+            Matriz Resultado = new Matriz(A.rows, A.columns);
+
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    if (j != i)
+                    {
+                        Resultado.Append(i, j, 0);
+                    }
+                    else
+                    {
+                        Resultado.Append(i, j, 1/A.Get(i, j));
+                    }
+                }
+            }
+            return Resultado;
         }
 
         // Funcion que devuelve la matriz dominante
