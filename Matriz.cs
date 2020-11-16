@@ -372,9 +372,9 @@ namespace Matriz
                 {
                     for (int i = 0; i < 4; i++)
                     {
-                        aux = Resultado.Get(i, k);
-                        Resultado.Append(i, k, Resultado.Get(i, ind));
-                        Resultado.Append(i, ind, aux);
+                        aux = Resultado.Get(k, i);
+                        Resultado.Append(k, i, Resultado.Get(ind, i));
+                        Resultado.Append(ind, i, aux);
                     }
                 }
             }
