@@ -169,6 +169,98 @@ namespace Matriz
             return T;
         }
 
+        //Multiplicar una matriz por un vector
+        //Recibe A como un vector 4x1 y B como una matriz de 4x4
+        public static Matriz AddVector(Matriz A, Matriz B)
+        {
+            Matriz Vector = new Matriz(4, 1);
+            double suma = 0;
+
+            for (int i = 0; i < 4; i++)
+            {
+
+                for (int j = 0; j < 4; j++)
+                {
+                    suma += (A.Get(j, 0) * B.Get(i, j));
+                }
+
+                Vector.Append(i, 0, suma);
+                suma = 0;
+            }
+
+            return Vector;
+
+        }
+
+        //Suma de dos matrices de 4x1
+        //Gauss Jacobi
+        public static Matriz SumaVector(Matriz A, Matriz B)
+        {
+            Matriz Vector = new Matriz(4, 1);
+
+            for (int i = 0; i < Vector.rows; i++)
+            {
+                Vector.Append(i, 0, A.Get(i, 0) + B.Get(i, 0));
+            }
+
+            return Vector;
+        }
+
+        //Resta dos matrices de 4x1 
+        //Gauss Jacobi
+        public static Matriz RestarMatriz(Matriz A, Matriz B)
+        {
+            Matriz Vector = new Matriz(4, 4);
+
+            for (int i = 0; i < Vector.rows; i++)
+            {
+                for (int j = 0; j < Vector.columns; j++)
+                {
+                    Vector.Append(i, j, A.Get(i, j) - B.Get(i, j));
+                }
+            }
+
+            return Vector;
+        }
+
+        //Diagonal inversa de una matriz para Gauss Jacobi
+        public static Matriz Diagonal(Matriz A)
+        {
+            Matriz Resultado = new Matriz(A.rows, A.columns);
+
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    if (j != i)
+                    {
+                        Resultado.Append(i, j, 0);
+                    }
+                    else
+                    {
+                        Resultado.Append(i, j, 1/A.Get(i, j));
+                    }
+                }
+            }
+            return Resultado;
+        }
+
+        //Diagonal de una matriz para Gauss Jacobi
+        public static Matriz DiagonalNormal(Matriz A)
+        {
+            Matriz Resultado = new Matriz(4, 4);
+
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    if (j == i)
+                        Resultado.Append(i, j, A.Get(i, j));
+                }
+            }
+            return Resultado;
+        }
+
         //Método que devuelve una matriz triangular superior
         public static Matriz TriangularSuperior(Matriz A)
         {
@@ -248,17 +340,16 @@ namespace Matriz
 
             double dd = 0, suma, aux = 0, may = 0;
             int ind = 0;
-            int k = 0;
 
-            for (k = 0; k < 4; k++)
+            for (int k = 0; k < 4; k++)
             {
                 may = Math.Abs(Resultado.Get(k, k));
 
                 for (int l = k + 1; l < 4; l++)
                 {
-                    if (may < Math.Abs(Resultado.Get(k, l)))
+                    if (may < Math.Abs(Resultado.Get(l, k)))
                     {
-                        may = Math.Abs(Resultado.Get(k, l));
+                        may = Math.Abs(Resultado.Get(l, k));
                         ind = l;
                     }
 
@@ -269,11 +360,11 @@ namespace Matriz
                 {
                     if (k == j)
                     {
-                        dd = Math.Abs(Resultado.Get(j, k));
+                        dd = Math.Abs(Resultado.Get(k, j));
                     }
                     else
                     {
-                        suma = suma + Resultado.Get(j, k);
+                        suma = suma + Resultado.Get(k, j);
                     }
                 }
 
@@ -283,13 +374,13 @@ namespace Matriz
                     {
                         aux = Resultado.Get(i, k);
                         Resultado.Append(i, k, Resultado.Get(i, ind));
-                        Resultado.Append(i, ind,aux);
+                        Resultado.Append(i, ind, aux);
                     }
                 }
             }
 
             return Resultado;
-        }
+        }//Fin método dominante
 
         // Funcion que devuelve una fila de la matriz
         // como un vector.
