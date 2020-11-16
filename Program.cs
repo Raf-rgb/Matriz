@@ -6,7 +6,7 @@ namespace Matriz
     {
         static void Main(string[] args)
         {
-            string[] funciones = new string[] 
+            string[] matrizXD = new string[] 
             {
                 "7x-2y+1z+2w = 3",
                 "2x+8y+3z+1w = -2",
@@ -23,13 +23,17 @@ namespace Matriz
                 "7x-2y+1z+2w = 3",
                 "-1x+0y+5z+2w = 5",
             };
+            string[] menu = new string[]{
+                "Sistema de Ecuaciones Lineales",
+                "Sistema de Ecuaciones no Lineales"
+            }
             bool v = true;
             int op = 0;
             while (v)
             {
                 Console.WriteLine("--Menu--");
-                Console.WriteLine(" (1) Sistema de Ecuaciones Lineales");
-                Console.WriteLine(" (2) Sistema de Ecuaciones no Lineales");
+                Console.WriteLine($" (1) {menu[0]}");
+                Console.WriteLine($" (2) {menu[1]}");
                 Console.WriteLine(" (3) Salir del sistema");
                 try
                 {
@@ -41,22 +45,22 @@ namespace Matriz
                 }
                 if (op == 1)
                 {
-                    Console.WriteLine("--Menu Sistemas de ecuaciones Lineales--");
+                    Console.WriteLine($"--Menu {menu[0]}--");
                     Console.WriteLine(" (1) ");
-                    Console.WriteLine($"{funciones[0]}");
-                    Console.WriteLine($"{funciones[1]}");
-                    Console.WriteLine($"{funciones[2]}");
-                    Console.WriteLine($"{funciones[3]}");
+                    Console.WriteLine($"{matrizXD[0]}");
+                    Console.WriteLine($"{matrizXD[1]}");
+                    Console.WriteLine($"{matrizXD[2]}");
+                    Console.WriteLine($"{matrizXD[3]}");
                     Console.WriteLine(" (2) ");
-                    Console.WriteLine($"{funciones[5]}");
-                    Console.WriteLine($"{funciones[6]}");
-                    Console.WriteLine($"{funciones[7]}");
-                    Console.WriteLine($"{funciones[8]}");
+                    Console.WriteLine($"{matrizXD[5]}");
+                    Console.WriteLine($"{matrizXD[6]}");
+                    Console.WriteLine($"{matrizXD[7]}");
+                    Console.WriteLine($"{matrizXD[8]}");
                     Console.WriteLine(" (3) ");
-                    Console.WriteLine($"{funciones[10]}");
-                    Console.WriteLine($"{funciones[11]}");
-                    Console.WriteLine($"{funciones[12]}");
-                    Console.WriteLine($"{funciones[13]}");
+                    Console.WriteLine($"{matrizXD[10]}");
+                    Console.WriteLine($"{matrizXD[11]}");
+                    Console.WriteLine($"{matrizXD[12]}");
+                    Console.WriteLine($"{matrizXD[13]}");
                     try{
                         op = Convert.ToInt32(Console.ReadLine());
                     }
