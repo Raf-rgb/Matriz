@@ -155,6 +155,27 @@ namespace Matriz
                 return null;
             }
         }
+        
+        // Funcion que recibe como parametros dos matrices
+        // A y B. Devuelve la multiplicación de ambas. 3 x 3 - 3 x 1
+        public static Vector Mult(Matriz A, Vector B) {
+            if(A.columns == B.len) {
+                Vector C = new Vector(B.len);
+
+                for(int i = 0; i < A.rows; i++) {
+                    double sum = 0;
+                    for(int  j = 0; j < A.columns; j++) {
+                        sum += A.Get(i, j) * B.vector[j];
+                    }
+                    C.vector[i] = sum;
+                }
+
+                return C;
+            } else {
+                Console.WriteLine("\nError: La cantidad de columnas de la matriz debe ser igual a la cnatidad de elementos del vector.");
+                return null;
+            }
+        }
 
         // Funcion que devuelve la transpuesta de una matriz
         public Matriz Transpose() {
