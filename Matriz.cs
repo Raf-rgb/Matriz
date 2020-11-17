@@ -380,6 +380,32 @@ namespace Matriz
 
             return Resultado;
         }//Fin método dominante
+        
+        // Funcion que devuelve una fila de la matriz
+        // como un vector.
+        public Vector Get(int i) {
+            Vector v = new Vector(matriz.GetLength(1));
+
+            for(int j = 0; j < v.len; j++) {
+                v.vector[j] = matriz[i, j];
+            }
+
+            return v;
+        }
+
+        // Funcion para obtener una copia del
+        // objeto Matriz.
+        public Matriz Copy() {
+            Matriz copy = new Matriz(rows, columns);
+
+            for(int i = 0; i < rows; i++) {
+                for(int j = 0; j < columns; j++) {
+                    copy.Append(i, j, matriz[i, j]);
+                }
+            }
+
+            return copy;
+        }
 
         // Funcion para insertar un vector como
         // a una fila (i) de la matriz.
