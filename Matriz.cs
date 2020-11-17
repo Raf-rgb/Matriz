@@ -338,47 +338,58 @@ namespace Matriz
         {
             Matriz Resultado = A;
 
-            double dd = 0, suma, aux = 0, may = 0;
+            double may = 0, mayaux = 0,mayaux1 = 0, z = 0, w = 0;
             int ind = 0;
+            int k = 0,aux = 0,x = 0,y = 0,x1 = 0, y1 = 0;
 
-            for (int k = 0; k < 4; k++)
+            for (k = 0; k < 4; k=k+1)
             {
                 may = Math.Abs(Resultado.Get(k, k));
-
-                for (int l = k + 1; l < 4; l++)
+                y = x = k;
+                for (int l = 0; l < 4; l++)
                 {
-                    if (may < Math.Abs(Resultado.Get(l, k)))
-                    {
-                        may = Math.Abs(Resultado.Get(l, k));
-                        ind = l;
-                    }
-
+                    if (l != k){
+                        if (may < Math.Abs(Resultado.Get(k, l)))
+                        {
+                            may = Math.Abs(Resultado.Get(k, l));
+                            x = k;
+                            y = l;
+                        }
+                    }   
                 }
-
-                suma = 0;
-                for (int j = 0; j < 4; j++)
-                {
-                    if (k == j)
+                if (y != k) {
+                    int l = 0;
+                    int aux1 = y;
+                    for (aux = 0; aux < 4; aux++) 
                     {
-                        dd = Math.Abs(Resultado.Get(k, j));
+                        while (l < 4)
+                        {
+                            mayaux = Math.Abs(Resultado.Get(aux, aux1));
+                            if (may < mayaux){
+                                mayaux1 = mayaux;
+                                x1 = aux;
+                                y1 = aux1;
+                            }
+                            l++;
+                        }         
                     }
-                    else
-                    {
-                        suma = suma + Resultado.Get(k, j);
-                    }
-                }
-
-                if (dd < suma)
-                {
+                    l = 0;
                     for (int i = 0; i < 4; i++)
                     {
-                        aux = Resultado.Get(k, i);
-                        Resultado.Append(k, i, Resultado.Get(ind, i));
-                        Resultado.Append(ind, i, aux);
+                        z = Resultado.Get(x, i);
+                        Resultado.Append(x, i, Resultado.Get(y, i));
+                        Resultado.Append(y, i, z);
                     }
+                    
                 }
+                may = 0;
+                mayaux = 0;
+                mayaux1 = 0;
+                y = 0;
+                x = 0;
+                x1 = 0;
+                y1 = 0;
             }
-
             return Resultado;
         }//Fin método dominante
 
