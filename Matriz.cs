@@ -72,7 +72,7 @@ namespace Matriz
                     }
                 }
             } else {
-                Console.WriteLine("Error: Las matrices no son cuadradas, no se pueden sumar ):");
+                Console.WriteLine("\nError: Las matrices no son cuadradas, no se pueden sumar ):");
             }
         }
 
@@ -91,7 +91,7 @@ namespace Matriz
 
                 return C;
             } else {
-                Console.WriteLine("Error: Las matrices no son cuadradas, no se pueden sumar ):");
+                Console.WriteLine("\nError: Las matrices no son cuadradas, no se pueden sumar ):");
                 return null;
             }
         }
@@ -108,7 +108,7 @@ namespace Matriz
                     }
                 }
             } else {
-                Console.WriteLine("Error: Las matrices no son cuadradas, no se pueden sumar ):");
+                Console.WriteLine("\nError: Las matrices no son cuadradas, no se pueden sumar ):");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Matriz
 
                 return C;
             } else {
-                Console.WriteLine("Error: Las matrices no son cuadradas, no se pueden sumar ):");
+                Console.WriteLine("\nError: Las matrices no son cuadradas, no se pueden sumar ):");
                 return null;
             }
         }
@@ -140,27 +140,27 @@ namespace Matriz
 
                 for(int i = 0; i < A.rows; i++) {
                     for(int  j = 0; j < A.columns; j++) {
-                        double suma = 0;
+                        double sum = 0;
                         for(int k = 0; k < A.columns; k++) {
-                            suma += A.Get(i, k) * B.Get(k, j);
+                            sum += A.Get(i, k) * B.Get(k, j);
                         }
 
-                        C.Append(i, j, suma);
+                        C.Append(i, j, sum);
                     }
                 }
 
                 return C;
             } else {
-                Console.WriteLine("Error: no se pueden multiplicar");
+                Console.WriteLine("\nError: no se pueden multiplicar");
                 return null;
             }
         }
-        
+
         // Funcion que recibe como parametros dos matrices
         // A y B. Devuelve la multiplicación de ambas. 3 x 3 - 3 x 1
         public static Vector Mult(Matriz A, Vector B) {
             if(A.columns == B.len) {
-                Vector C = new Vector(B.len);
+                Vector C = new Vector(A.rows);
 
                 for(int i = 0; i < A.rows; i++) {
                     double sum = 0;
@@ -190,76 +190,6 @@ namespace Matriz
             return T;
         }
 
-        //Multiplicar una matriz por un vector
-        //Recibe A como un vector 4x1 y B como una matriz de 4x4
-        public static Matriz AddVector(Matriz A, Matriz B)
-        {
-            Matriz Vector = new Matriz(4, 1);
-            double suma = 0;
-
-            for (int i = 0; i < 4; i++)
-            {
-
-                for (int j = 0; j < 4; j++)
-                {
-                    suma += (A.Get(j, 0) * B.Get(i, j));
-                }
-
-                Vector.Append(i, 0, suma);
-                suma = 0;
-            }
-
-            return Vector;
-
-        }
-
-        //Suma de dos matrices de 4x1
-        //Gauss Jacobi
-        public static Matriz SumaVector(Matriz A, Matriz B)
-        {
-            Matriz Vector = new Matriz(4, 1);
-
-            for (int i = 0; i < Vector.rows; i++)
-            {
-                Vector.Append(i, 0, A.Get(i, 0) + B.Get(i, 0));
-            }
-
-            return Vector;
-        }
-
-        //Resta dos matrices de 4x1 
-        //Gauss Jacobi
-        public static Matriz RestarMatriz(Matriz A, Matriz B)
-        {
-            Matriz Vector = new Matriz(4, 4);
-
-            for (int i = 0; i < Vector.rows; i++)
-            {
-                for (int j = 0; j < Vector.columns; j++)
-                {
-                    Vector.Append(i, j, A.Get(i, j) - B.Get(i, j));
-                }
-            }
-
-            return Vector;
-        }
-
-        //Diagonal de una matriz para Gauss Jacobi
-        public static Matriz DiagonalNormal(Matriz A)
-        {
-            Matriz Resultado = new Matriz(4, 4);
-
-            for (int i = 0; i < 4; i++)
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                    if (j == i)
-                        Resultado.Append(i, j, A.Get(i, j));
-                }
-            }
-            return Resultado;
-        }
-
         //Método que devuelve una matriz triangular superior
         public static Matriz TriangularSuperior(Matriz A)
         {
@@ -269,16 +199,13 @@ namespace Matriz
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    if (j <= i)
+                    if (j < i)
                     {
                         Resultado.Append(i,j,0);
                     }
                     else
                     {
-                        if(A.Get(i, j) == 0)
-                             Resultado.Append(i, j, 0);
-                        else
-                             Resultado.Append(i, j, -1 * A.Get(i, j));
+                         Resultado.Append(i, j, A.Get(i, j));
                     }
                 }
             }
@@ -300,40 +227,51 @@ namespace Matriz
                     }
                     else
                     {
-                        if(A.Get(i, j) == 0)
-                             Resultado.Append(i, j, 0);
-                        else
-                             Resultado.Append(i, j, -1 * A.Get(i, j));
+                        Resultado.Append(i, j, A.Get(i, j));
                     }
                 }
            }
            return Resultado;
         }
-        
-        //Método que obtiene la matriz diagonal
-        public static Matriz Diagonal(Matriz A)
-        {
-            Matriz Resultado = new Matriz(A.rows, A.columns);
 
-            for (int i = 0; i < 4; i++)
+        public static Matriz Diagonal(Matriz A)
             {
-                for (int j = 0; j < 4; j++)
+                Matriz Resultado = new Matriz(A.rows, A.columns);
+
+                for (int i = 0; i < 4; i++)
                 {
-                    if (j != i)
+                    for (int j = 0; j < 4; j++)
                     {
-                        Resultado.Append(i, j, 0);
-                    }
-                    else
-                    {
-                        Resultado.Append(i, j, 1/A.Get(i, j));
+                        if (j != i)
+                        {
+                            Resultado.Append(i, j, 0);
+                        }
+                        else
+                        {
+                            Resultado.Append(i, j, 1/A.Get(i, j));
+                        }
                     }
                 }
+                return Resultado;
             }
-            return Resultado;
-        }
+
+            public static Matriz DiagonalNormal(Matriz A)
+            {
+                Matriz Resultado = new Matriz(4, 4);
+
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        if (j == i)
+                            Resultado.Append(i, j, A.Get(i, j));
+                    }
+                }
+                return Resultado;
+            }
 
         // Funcion que devuelve la matriz dominante
-        public static Matriz dominante(Matriz A)
+        public static Matriz Dominante(Matriz A)
         {
             Matriz Resultado = A;
 
@@ -373,14 +311,14 @@ namespace Matriz
                     {
                         aux = Resultado.Get(k, i);
                         Resultado.Append(k, i, Resultado.Get(ind, i));
-                        Resultado.Append(ind, i,aux);
+                        Resultado.Append(ind, i, aux);
                     }
                 }
             }
 
             return Resultado;
         }//Fin método dominante
-        
+
         // Funcion que devuelve una fila de la matriz
         // como un vector.
         public Vector Get(int i) {
