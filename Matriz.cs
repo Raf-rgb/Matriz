@@ -223,28 +223,6 @@ namespace Matriz
             return Vector;
         }
 
-        //Diagonal inversa de una matriz para Gauss Jacobi
-        public static Matriz Diagonal(Matriz A)
-        {
-            Matriz Resultado = new Matriz(A.rows, A.columns);
-
-            for (int i = 0; i < 4; i++)
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                    if (j != i)
-                    {
-                        Resultado.Append(i, j, 0);
-                    }
-                    else
-                    {
-                        Resultado.Append(i, j, 1/A.Get(i, j));
-                    }
-                }
-            }
-            return Resultado;
-        }
-
         //Diagonal de una matriz para Gauss Jacobi
         public static Matriz DiagonalNormal(Matriz A)
         {
