@@ -255,20 +255,21 @@ namespace Matriz
                 }
                 return Resultado; //Retorna la matriz del resultado
             }
-
+            
+            //Método que obtiene la matriz diagonal de otra matriz dada
             public static Matriz DiagonalNormal(Matriz A)
             {
-                Matriz Resultado = new Matriz(4, 4);
+                Matriz Resultado = new Matriz(4, 4); //Instaciamos una matriz de 4x4
 
                 for (int i = 0; i < 4; i++)
                 {
                     for (int j = 0; j < 4; j++)
                     {
                         if (j == i)
-                            Resultado.Append(i, j, A.Get(i, j));
+                            Resultado.Append(i, j, A.Get(i, j)); //Obtenemos los valores de la diagonal
                     }
                 }
-                return Resultado;
+                return Resultado; //Retornamos la matriz diagonal
             }
 
         // Funcion que devuelve la matriz dominante
