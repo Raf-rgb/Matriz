@@ -29,6 +29,15 @@ namespace Matriz
             len = vector.Length;
         }
 
+        // Funcion para obtener la magnitud de una vector.
+        public double Mag() {
+            double sum = 0;
+            for(int i = 0; i < len; i++) {
+                sum += Math.Pow(vector[i], 2);
+            }
+            return Math.Sqrt(sum);
+        }
+
         // Funcion para sumar dos vectores
         // Devuelve el resultado de la suma.    
         public static Vector Add(Vector v1, Vector v2) {
@@ -132,7 +141,10 @@ namespace Matriz
 
         // Funcion que devuelve la distancia entre dos vectores
         public static double Dist(Vector v1, Vector v2) {
-            return Math.Sqrt(DotProduct(v1, v2));
+            // Se restan ambos vectores, y su magnitud será
+            // la distancia entre ellos.
+            Vector dist = Vector.Sub(v1, v2);
+            return dist.Mag();
         }
 
         // Se convierte un vector de entrada en string
@@ -158,12 +170,19 @@ namespace Matriz
 
             // Se guardan los elementos del vector de entrada (string)
             // en el vector de salida (double).
-            for(int i = 0; i < elementos.Length; i++) {
-                vec[i] = Convert.ToDouble(elementos[i]);
+            try {
+                for(int i = 0; i < elementos.Length; i++) {
+                    vec[i] = Convert.ToDouble(elementos[i]);
+                }
+                
+                // Se devuelve el vector resultante de la conversion.
+                return vec;
+            } catch {
+                Console.WriteLine($"Error: Formato incorrecto -> {s}");
+                Console.WriteLine("utilice el siguiente formato -> {1, 2, 3}");
+                
+                return null;
             }
-
-            // Se devuelve el vector resultante de la conversion.
-            return vec;
         }
 
         // Funcion para imprimir un vector en una sola
