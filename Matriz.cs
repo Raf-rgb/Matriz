@@ -201,11 +201,11 @@ namespace Matriz
                 {
                     if (j < i) //Busca que el valor de la columna sea menor que el de la fila 
                     {
-                        Resultado.Append(i,j,0); //Si no es el caso, asignamos el valor cero
+                        Resultado.Append(i,j,0); //Si la condición se cumple, asignamos el valor cero
                     }
                     else
                     {
-                         Resultado.Append(i, j, A.Get(i, j)); //De ser así, asignamos el valor que contiene en esa posición
+                         Resultado.Append(i, j, A.Get(i, j)); //De no ser así, asignamos el valor que contiene en esa posición
                     }
                 }
             }
@@ -223,36 +223,37 @@ namespace Matriz
                 {
                     if (j > i)
                     {
-                        Resultado.Append(i, j, 0); //Si no es el caso, asignamos el valor cero
+                        Resultado.Append(i, j, 0); //De ser así, asignamos el valor cero
                     }
                     else
                     {
-                        Resultado.Append(i, j, A.Get(i, j)); //De ser así, asignamos el valor que contiene en esa posición
+                        Resultado.Append(i, j, A.Get(i, j)); //De no cumplirse, asignamos el valor que contiene en esa posición
                     }
                 }
            }
            return Resultado; //Retornamos el valor de matriz resultado
         }
-
+        
+        // Método que retorna la diagonal inversa de una matriz
         public static Matriz Diagonal(Matriz A)
             {
-                Matriz Resultado = new Matriz(A.rows, A.columns);
+                Matriz Resultado = new Matriz(A.rows, A.columns); //Instaciamos una matriz de n x n
 
                 for (int i = 0; i < 4; i++)
                 {
                     for (int j = 0; j < 4; j++)
                     {
-                        if (j != i)
+                        if (j != i) //Busca que el valor de la fila sea el mismo que la columna
                         {
-                            Resultado.Append(i, j, 0);
+                            Resultado.Append(i, j, 0); //De ser así, asignamos el valor cero
                         }
                         else
                         {
-                            Resultado.Append(i, j, 1/A.Get(i, j));
+                            Resultado.Append(i, j, 1/A.Get(i, j)); //De no ser asi asignamos la inversa de la matriz, cumpliendo que (A^-1) * (A) = I
                         }
                     }
                 }
-                return Resultado;
+                return Resultado; //Retorna la matriz del resultado
             }
 
             public static Matriz DiagonalNormal(Matriz A)
@@ -273,21 +274,21 @@ namespace Matriz
         // Funcion que devuelve la matriz dominante
         public static Matriz Dominante(Matriz A)
         {
-            Matriz Resultado = A;
+            Matriz Resultado = A; //Instaciamos una matriz de resultados
 
-            double dd = 0, suma, aux = 0, may = 0;
+            double dd = 0, suma, aux = 0, may = 0; //Declaramos variables
             int ind = 0;
 
             for (int k = 0; k < 4; k++)
             {
-                may = Math.Abs(Resultado.Get(k, k));
+                may = Math.Abs(Resultado.Get(k, k)); //Se declara el mayor en función de la diagonal
 
                 for (int l = k + 1; l < 4; l++)
                 {
-                    if (may < Math.Abs(Resultado.Get(l, k)))
+                    if (may < Math.Abs(Resultado.Get(l, k))) //Busca el valor mayor de cada fila de la columna dada
                     {
                         may = Math.Abs(Resultado.Get(l, k));
-                        ind = l;
+                        ind = l; //Guardamos el indice del mayor
                     }
 
                 }
@@ -297,19 +298,19 @@ namespace Matriz
                 {
                     if (k == j)
                     {
-                        dd = Math.Abs(Resultado.Get(k, j));
+                        dd = Math.Abs(Resultado.Get(k, j)); //Obtenemos el mayor de cada fila
                     }
                     else
                     {
-                        suma = suma + Math.Abs(Resultado.Get(k, j));
+                        suma = suma + Math.Abs(Resultado.Get(k, j)); //Sumatoria de los valores restantes de la fila
                     }
                 }
 
-                if (dd < suma)
+                if (dd < suma) //Criterio de convergencia  
                 {
                     for (int i = 0; i < 4; i++)
                     {
-                        aux = Resultado.Get(k, i);
+                        aux = Resultado.Get(k, i); //Canbiamos los valores entre las filas
                         Resultado.Append(k, i, Resultado.Get(ind, i));
                         Resultado.Append(ind, i, aux);
                     }
