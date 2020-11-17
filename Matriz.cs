@@ -193,45 +193,45 @@ namespace Matriz
         //Método que devuelve una matriz triangular superior
         public static Matriz TriangularSuperior(Matriz A)
         {
-            Matriz Resultado = new Matriz(A.rows, A.columns);
+            Matriz Resultado = new Matriz(A.rows, A.columns); //Instaciamos una matriz de n x n
                 
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    if (j < i)
+                    if (j < i) //Busca que el valor de la columna sea menor que el de la fila 
                     {
-                        Resultado.Append(i,j,0);
+                        Resultado.Append(i,j,0); //Si no es el caso, asignamos el valor cero
                     }
                     else
                     {
-                         Resultado.Append(i, j, A.Get(i, j));
+                         Resultado.Append(i, j, A.Get(i, j)); //De ser así, asignamos el valor que contiene en esa posición
                     }
                 }
             }
-            return Resultado;
+            return Resultado; //Retornamos el valor de matriz resultado
         }
         
         //Método que devuelve una matriz triangular inferior
         public static Matriz TriangularInferior(Matriz A)
         {
-           Matriz Resultado = new Matriz(A.rows, A.columns);
+           Matriz Resultado = new Matriz(A.rows, A.columns); //Instaciamos una matriz de n x n
 
            for (int i = 0; i < 4; i++)
            {
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < 4; j++) //Busca que el valor de la columna sea mayor que el de la fila 
                 {
                     if (j > i)
                     {
-                        Resultado.Append(i, j, 0);
+                        Resultado.Append(i, j, 0); //Si no es el caso, asignamos el valor cero
                     }
                     else
                     {
-                        Resultado.Append(i, j, A.Get(i, j));
+                        Resultado.Append(i, j, A.Get(i, j)); //De ser así, asignamos el valor que contiene en esa posición
                     }
                 }
            }
-           return Resultado;
+           return Resultado; //Retornamos el valor de matriz resultado
         }
 
         public static Matriz Diagonal(Matriz A)
