@@ -138,8 +138,8 @@ namespace Matriz
             if(A.columns == B.rows) {
                 Matriz C = new Matriz(A.rows, B.columns);
 
-                for(int i = 0; i < A.rows; i++) {
-                    for(int  j = 0; j < A.columns; j++) {
+                for(int i = 0; i < C.rows; i++) {
+                    for(int  j = 0; j < C.columns; j++) {
                         double sum = 0;
                         for(int k = 0; k < A.columns; k++) {
                             sum += A.Get(i, k) * B.Get(k, j);
